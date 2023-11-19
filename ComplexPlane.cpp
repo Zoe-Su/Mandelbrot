@@ -59,20 +59,24 @@ void ComplexPlane::zoomOut()
     m_state = State::CALCULATING;
 }
 
-// Come back to this later, uses other functions
+/****** Set center in complex plane ******/
 void ComplexPlane::setCenter(Vector2i mousePixel)
 {
+    m_plane_center = mapPixelToCoords(mousePixel);
 
+    m_state = State::CALCULATING;
 }
 
-// Come back to this later, uses other functions
+/****** Set mouse location in complex plane ******/
 void ComplexPlane::setMouseLocation(Vector2i mousePixel)
 {
-
+    m_mouseLocation = mapPixelToCoords(mousePixel);
 }
 
+/****** Display text ******/
 void ComplexPlane::loadText(Text& text)
 {
+    /**
     stringstream strm;
     string title, rightClick, leftClick;
     // Might be wrong, check after completing main
@@ -84,6 +88,7 @@ void ComplexPlane::loadText(Text& text)
     cout << "Cursor: (" << m_mouseLocation.x << ", " << m_mouseLocation.y << ")" << endl;
     cout << leftClick << endl;
     cout << rightClick << endl;
+    **/
 }
 
 // Come back to this later, uses other functions
@@ -112,8 +117,12 @@ void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b)
     
 }
 
+/****** Maps pixels to complex plane ******/
 Vector2f ComplexPlane::mapPixelToCoords(Vector2i mousePixel)
 {
-    // Random return value
-    return m_plane_center;
+    Vector2f coord;
+    coord.x = ((mousePixel.x / float(m_pixel_size.x)) * m_plane_size.x) + (m_plane_center.x - m_plane_size.x / 2.0);
+    coord.y = ((mousePixel.y / float(m_pixel_size.y)) * m_plane_size.y) + (m_plane_center.y - m_plane_size.y / 2.0);
+
+    return coord;
 }
