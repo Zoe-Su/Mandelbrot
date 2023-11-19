@@ -7,6 +7,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <cmath>
 
 // Makes code easier to write
 using namespace sf;

@@ -7,6 +7,8 @@ int main()
 
   RenderWindow window(vm, "Mandelbrot", Style::Default);
 
+  ComplexPlane plane(VideoMode::getDesktopMode().width / 2, VideoMode::getDesktopMode().height / 2);
+
   Font font;
   if (!font.loadFromFile("arial.ttf"))
   {
@@ -15,6 +17,8 @@ int main()
 
   Text text;
   text.setFont(font);
+
+  plane.loadText(text);
 
   while (window.isOpen())
   {
