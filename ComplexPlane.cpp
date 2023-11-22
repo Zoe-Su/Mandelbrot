@@ -175,3 +175,8 @@ Vector2f ComplexPlane::mapPixelToCoords(Vector2i mousePixel)
 
     return coord;
 }
+
+void ComplexPlane::setCalcState()
+{
+    m_state = State::CALCULATING;
+}

@@ -18,8 +18,9 @@ int main()
 
   Text text;
   text.setFont(font);
-
-  plane.loadText(text);
+  text.setCharacterSize(20);
+  text.setPosition(10, 10);
+  text.setFillColor(Color::White);
 
   while (window.isOpen())
   {
@@ -28,9 +29,42 @@ int main()
 		{
       if (event.type == Event::Closed)
       {
-        // Quit the game when the window is closed
+        // Quit the program when the window is closed
 				window.close();
       }
+      else if (event.type == Event::MouseButtonPressed)
+      {
+        if (event.mouseButton.button == Mouse::Right)
+        {
+          plane.zoomOut();
+          plane.setCenter(Mouse::getPosition(window));
+          plane.setCalcState();
+        }
+        else if (event.mouseButton.button == Mouse::Left)
+        {
+          plane.zoomIn();
+          plane.setCenter(Mouse::getPosition(window));
+          plane.setCalcState();
+        }
+      }
+      else if (event.type == Event::MouseMoved)
+      {
+        plane.setMouseLocation(Mouse::getPosition(window));
+      }
+      else if (event.type == Keyboard::isKeyPressed(Keyboard::Escape))
+      {
+        window.close();
+      }
     }
+
+    plane.updateRender();
+    plane.loadText(text);
+
+    window.clear();
+    window.draw(plane);
+    window.draw(text);
+    window.display();
   }
+
+  return 0;
 }

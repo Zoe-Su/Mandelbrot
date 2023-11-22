@@ -38,6 +38,7 @@ class ComplexPlane : public Drawable
         void setMouseLocation(Vector2i mousePixel);
         void loadText(Text& text);
         void updateRender();
+        void setCalcState();
 
     private:
         VertexArray m_vArray;
