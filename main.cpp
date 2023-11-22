@@ -2,9 +2,8 @@
 
 int main()
 {
-  // Get desktop resolution; DIVIDING IT BY 2 RN TO MAKE IT RUN FASTER
-  int desktopWidth = VideoMode::getDesktopMode().width / 2;
-  int desktopHeight = VideoMode::getDesktopMode().height / 2;
+  int desktopWidth = VideoMode::getDesktopMode().width;
+  int desktopHeight = VideoMode::getDesktopMode().height;
 
   RenderWindow window(VideoMode(desktopWidth, desktopHeight), "Mandelbrot", Style::Default);
 
@@ -21,6 +20,8 @@ int main()
   text.setCharacterSize(20);
   text.setPosition(10, 10);
   text.setFillColor(Color::White);
+
+  Thread thread(&ComplexPlane::countIterations, &plane);
 
   while (window.isOpen())
   {
