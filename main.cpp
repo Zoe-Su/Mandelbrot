@@ -3,11 +3,12 @@
 int main()
 {
   // Get desktop resolution; DIVIDING IT BY 2 RN TO MAKE IT RUN FASTER
-  VideoMode vm(VideoMode::getDesktopMode().width / 2, VideoMode::getDesktopMode().height / 2);
+  int desktopWidth = VideoMode::getDesktopMode().width / 2;
+  int desktopHeight = VideoMode::getDesktopMode().height / 2;
 
-  RenderWindow window(vm, "Mandelbrot", Style::Default);
+  RenderWindow window(VideoMode(desktopWidth, desktopHeight), "Mandelbrot", Style::Default);
 
-  ComplexPlane plane(VideoMode::getDesktopMode().width / 2, VideoMode::getDesktopMode().height / 2);
+  ComplexPlane plane(desktopWidth, desktopHeight);
 
   Font font;
   if (!font.loadFromFile("arial.ttf"))

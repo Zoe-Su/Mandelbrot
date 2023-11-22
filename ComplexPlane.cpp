@@ -76,22 +76,18 @@ void ComplexPlane::setMouseLocation(Vector2i mousePixel)
 /****** Display text ******/
 void ComplexPlane::loadText(Text& text)
 {
-    /**
     stringstream strm;
-    string title, rightClick, leftClick;
-    // Might be wrong, check after completing main
-    strm << "Mandelbrot Set" << ' ' << m_plane_center << ' ' << m_mouseLocation << ' ' << "Left Click to Zoom in" << ' ' << "Right Click to Zoom Out";
-    strm >> title >> m_plane_center >> leftClick >> rightClick;
-    
-    cout << title << endl;
-    cout << "Center: (" << m_plane_center.x << ", " << m_plane_center.y << ")" << endl;
-    cout << "Cursor: (" << m_mouseLocation.x << ", " << m_mouseLocation.y << ")" << endl;
-    cout << leftClick << endl;
-    cout << rightClick << endl;
-    **/
+
+    strm << "Mandelbrot Set" << endl;
+    strm << "Center: (" << m_plane_center.x << ", " << m_plane_center.y << ")" << endl;
+    strm << "Cursor: (" << m_mouseLocation.x << ", " << m_mouseLocation.y << ")" << endl;
+    strm << "Left-click to zoom in" << endl;
+    strm << "Right-click to zoom out" << endl;
+
+    text.setString(strm.str());
 }
 
-// Come back to this later, uses other functions
+// Updates screen
 void ComplexPlane::updateRender()
 {
     if (m_state == State::CALCULATING)
@@ -101,8 +97,19 @@ void ComplexPlane::updateRender()
             for (int i = 0; i < m_pixel_size.y; i++)
             {
                 m_vArray[i * m_pixel_size.x + j].position = { float(j), float(i)};
+
+                Vector2f coords = mapPixelToCoords(Vector2i(j, i));
+
+                int iterations = countIterations(coords);
+
+                Uint8 r, g, b;
+                iterationsToRGB(iterations, r, g, b);
+
+                m_vArray[j + i * m_pixel_size.x].color = {r, g, b};
             }
         }
+
+        m_state = State::DISPLAYING;
     }
 }
 
@@ -131,9 +138,32 @@ int ComplexPlane::countIterations(Vector2f coord)
     return iterations;
 }
 
+/****** Makes it colorful! ******/
 void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b)
 {
-    
+    if (count == MAX_ITER)
+    {
+        r = 0;
+        g = 0;
+        b = 0;
+    }
+    else
+    {
+        size_t area = count / (MAX_ITER / 5);
+
+        Uint8 colors[5][3] = 
+        {
+            {18, 3, 72},     
+            {58, 32, 129},
+            {46, 44, 154},
+            {238, 200, 237},
+            {231, 228, 249}
+        };
+
+        r = colors[area][0] + count;
+        g = colors[area][1] + count;
+        b = colors[area][2] + count;
+    }
 }
 
 /****** Maps pixels to complex plane ******/
