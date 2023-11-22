@@ -106,10 +106,29 @@ void ComplexPlane::updateRender()
     }
 }
 
-// Come back to this later
+/****** Counts number of iterations ******/
 int ComplexPlane::countIterations(Vector2f coord)
 {
-    return 0;
+    double real = coord.x;
+    double imaginary = coord.y;
+
+    int iterations = 0;
+    complex<double> c(real, imaginary);
+    complex<double> z(0.0, 0.0);
+
+    while (iterations < MAX_ITER)
+    {
+        z = z * z + c;
+        
+        if (abs(z) > 2.0)
+        {
+            break;
+        }
+
+        iterations++;
+    }
+
+    return iterations;
 }
 
 void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b)

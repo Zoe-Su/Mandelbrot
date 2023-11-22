@@ -8,6 +8,7 @@
 #include <sstream>
 #include <vector>
 #include <cmath>
+#include <complex>
 
 // Makes code easier to write
 using namespace sf;
