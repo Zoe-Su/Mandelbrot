@@ -21,8 +21,6 @@ int main()
   text.setPosition(10, 10);
   text.setFillColor(Color::White);
 
-  Thread thread(&ComplexPlane::countIterations, &plane);
-
   while (window.isOpen())
   {
     Event event;
